@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
+
 # Program to produce the polynomial pedotransfer function from
 # article (name or DOI here).
 
-# Unless youy know a little about python, just change the code inbetween
+# Unless you know a little about Python, just change the code inbetween
 # the "-----".
 # you may choose the parameters and the program will build the polynomial
 # You may choose if you want an "Excel" version too,
@@ -101,5 +103,18 @@ if Excel:
   print('=sum(' , a1 , ')')
 
 else:
-  print(N(a1.subs(parameters)))
+    ans = float(N(a1.subs(parameters)))
+    if ans > 1.0:
+        ans = 1.0
+    elif ans < 0.0:
+        ans = 0.01
+    print(ans)
+    
+
+
+
+
+
+
+
 
