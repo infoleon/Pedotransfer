@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 # Program to generate and solve the polynomial pedotransfer function from
-# article (name or DOI here).
+# article (name and/or DOI here).
 
 # You may choose the parameters and the program will build and solve the polynomial
 # The parameters are availabe on "parameters" dictionary below.
 
-# Some VARIABLES change from the journal article version.
+# Some variables change names from the journal article.
 # al   : alpha parameter
 # lamb : l parameter related with conductivity function
 # dep  : depth of the considered boudary layer
@@ -21,7 +21,6 @@ parameters = {'al': 0.4624 ,
               'dep': 30  ,
               'q': 3.6  ,
               }
-
 
 
 # ------------------------------------------------------------------------------------------------
@@ -97,16 +96,20 @@ else:
 a1 = poli_m(var[0], var[1]).subs(parameters)
 
 ans = float(N(a1.subs(parameters)))
+
 if ans > 1.0:
+    print('The polynomial predicted value:', ans)
     ans = 1.0
+    print('Please, consider using value:', ans)
+    
 elif ans < 0.0:
+    print('The polynomial predicted value:', ans)
     ans = 0.01
-print('The solution for the polinomial with proposed parameters is:')
-print(ans)
+    print('Please, consider using value:', ans)
 
-
-
-
+else:
+    print('The solution for the polynomial with proposed parameters is:')
+    print(ans)
 
 
 
