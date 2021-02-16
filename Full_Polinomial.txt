@@ -1,12 +1,12 @@
-! Full version of the Polynomial
-! The Field Capacity is the summation of the multiplications on each line
+# Full version of the Polinomial
+# The Field Capacity is the summation of the multiplications on each line
 
-! Variables
-! al   : alpha
-! lamb : l parâmeter from conductivity function
-! dep  : z parameter representing soil depth
-!
-! Other variables are in the same notation as in the article.
+# VARIABLES
+# al   : alpha
+# lamb : l parâmeter from conductivity function
+# dep  : z parameter representing soil depth
+
+# Other variables are in the same notation as in the article.
 
 
 0.8654654556811963 * 1
