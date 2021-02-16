@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Program to produce the polynomial pedotransfer function from
+# Program to generate and solve the polynomial pedotransfer function from
 # article (name or DOI here).
 
 # You may choose the parameters and the program will build and solve the polynomial
