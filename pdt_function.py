@@ -3,11 +3,14 @@
 # Program to produce the polynomial pedotransfer function from
 # article (name or DOI here).
 
-# Unless you know a little about Python, just change the code inbetween
-# the "-----".
-# you may choose the parameters and the program will build the polynomial
-# You may choose if you want an "Excel" version too,
-# to copy and paste as an Excel expression
+# You may choose the parameters and the program will build and solve the polynomial
+# The parameters are availabe on "parameters" dictionary below.
+
+# Some VARIABLES change from the journal article version.
+# al   : alpha parameter
+# lamb : l parameter related with conductivity function
+# dep  : depth of the considered boudary layer
+
 
 # ------------------------------------------------------------------------------------------------
 
@@ -19,8 +22,6 @@ parameters = {'al': 0.4624 ,
               'q': 3.6  ,
               }
 
-# Change to "Excel = True" (without quotation) the next line if Excel formating is desired
-Excel = False
 
 
 # ------------------------------------------------------------------------------------------------
@@ -88,7 +89,6 @@ def poli_m(ctn, varia):
  
     return poli
 
-
 if parameters['lamb'] == 0.5:
   var = (ctn05, varia05)
 else:
@@ -96,20 +96,13 @@ else:
 
 a1 = poli_m(var[0], var[1]).subs(parameters)
 
-if Excel:
-  a1 = str(a1)
-  a1 = a1.replace('**', '^').replace('log', 'log10')
-
-  print('=sum(' , a1 , ')')
-
-else:
-    ans = float(N(a1.subs(parameters)))
-    if ans > 1.0:
-        ans = 1.0
-    elif ans < 0.0:
-        ans = 0.01
-    print(ans)
-    
+ans = float(N(a1.subs(parameters)))
+if ans > 1.0:
+    ans = 1.0
+elif ans < 0.0:
+    ans = 0.01
+print('The solution for the polinomial with proposed parameters is:')
+print(ans)
 
 
 
