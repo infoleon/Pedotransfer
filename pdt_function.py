@@ -1,27 +1,30 @@
 # -*- coding: utf-8 -*-
 
 # Program to generate and solve the polynomial pedotransfer function from
-# article (name and/or DOI here).
+# article (name or DOI here).
 
 # You may choose the parameters and the program will build and solve the polynomial
 # The parameters are availabe on "parameters" dictionary below.
 
-# Some variables change names from the journal article.
+# Some VARIABLES changed name from the orinal article version.
 # al   : alpha parameter
 # lamb : l parameter related with conductivity function
 # dep  : depth of the considered boudary layer
 
+# If Excel variable is set as True, the script provides an Excel version of the polynomial.
+
 
 # ------------------------------------------------------------------------------------------------
 
-parameters = {'al': 0.4624 ,
-              'n': 2.108  ,
-              'lamb': 0.601  ,
-              'Ks': 41.98  ,
-              'dep': 30  ,
-              'q': 3.6  ,
+parameters = {'al': 0.4624  ,
+              'n': 2.108    ,
+              'lamb': 0.5   ,
+              'Ks': 41.98   ,
+              'dep': 30     ,
+              'q': 3.6      ,
               }
 
+Excel = False
 
 # ------------------------------------------------------------------------------------------------
 
@@ -43,7 +46,7 @@ ctn = [0.8654654556811963, -0.05434726070081017, 0.08037116529839043, 0.00876280
        -0.03178639761011755, -0.6251196942516541, 0.1907936111626416, 0.03710196881236187, 
        0.09655013764417436, -0.0074343753768419465]
 
-varia = ['al', 'al*al', 'al*al*al', 'al*al*1/n', 'al*1/n*1/n', 'al*1/n*Ks', 'al*1/n*q', 
+varia = ['1', 'al', 'al*al', 'al*al*al', 'al*al*1/n', 'al*1/n*1/n', 'al*1/n*Ks', 'al*1/n*q', 
          'al*1/n*dep', 'al*1/n*lamb', 'al*Ks*Ks', 'al*Ks*q', 'al*Ks*dep', 'al*dep*dep', 
          'al*lamb', '1/n*1/n', '1/n*1/n*1/n', '1/n*1/n*Ks', '1/n*1/n*q', '1/n*1/n*dep', 
          '1/n*1/n*lamb', '1/n*Ks', '1/n*Ks*Ks', '1/n*Ks*q', '1/n*Ks*dep', '1/n*Ks*lamb', 
@@ -64,53 +67,67 @@ ctn05 = [0.8131647710603545, -0.1102031672431125, 0.09506884153342532, 0.0114559
         0.019207769964987353, 0.33815206287610744, 0.02943941769713415, -0.4789542530153339, 
         0.1527851846068795]
 
-varia05 = ['al', 'al*al', 'al*al*al', 'al*al*1/n', 'al*1/n*1/n', 'al*1/n*Ks', 'al*1/n*q', 
+varia05 = ['1', 'al', 'al*al', 'al*al*al', 'al*al*1/n', 'al*1/n*1/n', 'al*1/n*Ks', 'al*1/n*q', 
            'al*1/n*dep', 'al*Ks*Ks', 'al*Ks*q', 'al*Ks*dep', 'al*dep', '1/n*1/n', '1/n*1/n*1/n', 
            '1/n*1/n*Ks', '1/n*1/n*q', '1/n*1/n*dep', '1/n*Ks', '1/n*Ks*Ks', '1/n*Ks*q', 
            '1/n*Ks*dep', '1/n*q*q', '1/n*q*dep', '1/n*dep*dep', 'Ks', 'Ks*Ks', 'Ks*Ks*q', 
            'Ks*Ks*dep', 'Ks*q', 'Ks*q*q', 'Ks*q*dep', 'Ks*dep*dep', 'q', 'q*q*dep', 'dep', 
            'dep*dep']
 
-def poli_m(ctn, varia):
+def poly_m(ctn, varia):
     "Polynomial Maker"
-    varia.insert(0, '1')
-    poli = float(0)
-    if len(varia) != len(ctn): print('!!! Problem, different number of predictors and coefficients !!!')
+    
+    ctn_f, variable = ctn[:], varia[:]
+    
+    poly = float(0)
+    if len(variable) != len(ctn_f): print('!!! Problem, different number of predictors and coefficients !!!')
     
    # Remover variaveis    
-    for i in range(len(varia)):
+    for i in range(len(variable)):
         
-        varia[i] = varia[i].replace('al', 'log(al, 10)').replace('Ks', 'log(Ks, 10)').replace('dep',
+        variable[i] = variable[i].replace('al', 'log(al, 10)').replace('Ks', 'log(Ks, 10)').replace('dep',
         'log(dep, 10)').replace('q', 'log(q, 10)').replace('1/n','(1/n)')
 
-        aa = parse_expr(varia[i])
-        poli = poli + aa * ctn[i]
+        aa = parse_expr(variable[i])
+        poly = poly + aa * ctn_f[i]
  
-    return poli
+    return poly
 
 if parameters['lamb'] == 0.5:
   var = (ctn05, varia05)
 else:
   var = (ctn, varia)
 
-a1 = poli_m(var[0], var[1]).subs(parameters)
-
+a1 = poly_m(var[0], var[1]).subs(parameters)
 ans = float(N(a1.subs(parameters)))
 
-if ans > 1.0:
-    print('The polynomial predicted value:', ans)
-    ans = 1.0
-    print('Please, consider using value:', ans)
+if Excel == True:    
+    variable = var[1][:]
+    poly_e = ''
+    for i in range(len(variable)):
+        ww = variable[i].replace('al', 'log10(al)').replace('Ks', 'log10(Ks)').replace('dep',
+        'log10(dep)').replace('q', 'log10(q)').replace('1/n','(1/n)')
+        
+        poly_e += '(' + str(var[0][i]) + ') * ' + ww + ' + '
+    poly_e = poly_e[:-3]
+    print(poly_e)
+
+
+if Excel != True:
     
-elif ans < 0.0:
-    print('The polynomial predicted value:', ans)
-    ans = 0.01
-    print('Please, consider using value:', ans)
-
-else:
-    print('The solution for the polynomial with proposed parameters is:')
-    print(ans)
-
+    if ans > 1.0:
+        print('The polinomial predicted value:', ans)
+        ans = 1.0
+        print('Please, consider using value:', ans)
+        
+    elif ans < 0.0:
+        print('The polinomial predicted value:', ans)
+        ans = 0.01
+        print('Please, consider using value:', ans)
+    
+    else:
+        print('The solution for the polinomial with proposed parameters is:')
+        print(ans)
 
 
 
