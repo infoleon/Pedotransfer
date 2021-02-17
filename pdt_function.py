@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-
+#
 # Program to generate and solve the polynomial pedotransfer function from
 # article (name or DOI here).
-
-# You may choose the parameters and the program will build and solve the polynomial
-# The parameters are availabe on "parameters" dictionary below.
-
+#
+# You may choose the parameters and the program will build and solve the polynomial.
+# The parameters are availabe on "parameters" dictionary.
+#
 # Some VARIABLES changed name from the orinal article version.
 # al   : alpha parameter
 # lamb : l parameter related with conductivity function
 # dep  : depth of the considered boudary layer
-
-# If Excel variable is set as True, the script provides an Excel version of the polynomial,
+#
+# If Excel variable is set as True, the script provides an Excel version of the polynomial
 # without substitution of the parameters.
 
 
