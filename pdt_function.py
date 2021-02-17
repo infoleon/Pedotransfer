@@ -11,7 +11,8 @@
 # lamb : l parameter related with conductivity function
 # dep  : depth of the considered boudary layer
 
-# If Excel variable is set as True, the script provides an Excel version of the polynomial.
+# If Excel variable is set as True, the script provides an Excel version of the polynomial,
+# without substituting the parameters.
 
 
 # ------------------------------------------------------------------------------------------------
@@ -23,6 +24,7 @@ parameters = {'al': 0.4624  ,
               'dep': 30     ,
               'q': 3.6      ,
               }
+
 
 Excel = False
 
@@ -110,24 +112,10 @@ if Excel == True:
         
         poly_e += '(' + str(var[0][i]) + ') * ' + ww + ' + '
     poly_e = poly_e[:-3]
-    print(poly_e)
+    print(poly_e, end = '\n\n')
 
 
-if Excel != True:
-    
-    if ans > 1.0:
-        print('The polinomial predicted value:', ans)
-        ans = 1.0
-        print('Please, consider using value:', ans)
-        
-    elif ans < 0.0:
-        print('The polinomial predicted value:', ans)
-        ans = 0.01
-        print('Please, consider using value:', ans)
-    
-    else:
-        print('The solution for the polinomial with proposed parameters is:')
-        print(ans)
-
+print('The solution for the polynomial with proposed parameters is:')
+print(ans)
 
 
