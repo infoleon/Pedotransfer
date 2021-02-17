@@ -12,7 +12,7 @@
 # dep  : depth of the considered boudary layer
 
 # If Excel variable is set as True, the script provides an Excel version of the polynomial,
-# without substituting the parameters.
+# without substitution of the parameters.
 
 
 # ------------------------------------------------------------------------------------------------
