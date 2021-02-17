@@ -5,7 +5,7 @@
 # al   : alpha
 # dep  : z parameter representing soil depth
 #
-# Other variables are in the same notation as in the article.
+# Other variables are the same as in the article.
 
 
 
