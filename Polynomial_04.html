@@ -1,0 +1,148 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p {   font-size: 24px ;}
+p { font-family: "Times New Roman", Times, serif; }
+
+.p2 {  font-size: 26px ;}
+
+body {
+  background-color: #101010;
+  color: #ffffff;
+}
+h1 {
+  color: #ffffff;
+}
+
+a{style=color: powderblue; font-size: 24px;
+                text-shadow:
+                 0px 0px 2px #1040FF,
+                -2px -2px 2px #1040FF,
+                 2px -2px 2px #1040FF,
+                -2px 2px 2px #1040FF,
+                 2px 2px 2px #1040FF;
+}
+
+a.visited{ style=color: powderblue; font-size: 24px;
+                text-shadow:
+                 0px 0px 2px #1040FF,
+                -2px -2px 2px #1040FF,
+                 2px -2px 2px #1040FF,
+                -2px 2px 2px #1040FF,
+                 2px 2px 2px #1040FF;
+}
+
+const formatter = new Intl.NumberFormat('en-US', {
+   minimumFractionDigits: 4,      
+   maximumFractionDigits: 4,
+});
+
+</style>
+<body>
+
+<h2>Van Genuchten - Mualem &#8594; Flux based Field Capacity</h2>
+
+<p> <i> &alpha; </i> : <input type="number" step="any" id="al" value="0.4624" >  [cm<sup>-1</sup>]  </p>
+<p> <i> n </i> : <input type="number" step="any" id="n" value="2.108"  >  </p>
+<p> <i> l </i> : <input type="number" step="any" id="lamb" value="0.5"  > </p>
+<p> <i> Ks </i> : <input type="number" step="any" id="Ks" value="41.98"  > [cm . dia<sup>-1</sup>] </p>
+<p> <i> dep </i> : <input type="number" step="any" id="dep" value="30.0"  > [cm] </p>
+<p> <i> q </i> : <input type="number" step="any" id="q" value="3.6"  > [mm . dia<sup>-1</sup>] </p>
+
+<button onclick="myFunction()">FC</button>
+
+<p class="p2"  id="poly"> </p>
+
+<script>
+
+var al   ;
+var n    ;
+var lamb ;
+var Ks   ;
+var dep  ;
+var q    ;
+var poly ; 
+
+al   = 0.4624  ;
+n    = 2.108   ;
+lamb = 0.5     ;
+Ks   = 41.98   ;
+dep  = 30.0    ;
+q    = 3.6     ;
+
+function myFunction() {
+
+al   = document.getElementById("al").value;  
+n    = document.getElementById("n").value;
+lamb = document.getElementById("lamb").value;
+Ks   = document.getElementById("Ks").value;
+dep  = document.getElementById("dep").value;
+q    = document.getElementById("q").value;
+
+
+poly_d = 0.8654654556811963 * 1    
+- 0.05434726070081017 * Math.log10(al)   + 
+0.08037116529839043 * Math.log10(al) * Math.log10(al)   + 
+0.008762800602361308 * Math.log10(al) * Math.log10(al) * Math.log10(al)    
+- 0.04666291216858057 * Math.log10(al) * Math.log10(al) * (1/n)   + 
+0.2622780247098996 * Math.log10(al) * (1/n) * (1/n)    
+- 0.09413191609868982 * Math.log10(al) * (1/n) * Math.log10(Ks)   + 
+0.06132681005269242 * Math.log10(al) * (1/n) * Math.log10(q)    
+- 0.13323206575737548 * Math.log10(al) * (1/n) * Math.log10(dep)    
+- 0.021039571391720215 * Math.log10(al) * (1/n) * lamb   + 
+0.012148066143768961 * Math.log10(al) * Math.log10(Ks) * Math.log10(Ks)    
+- 0.02987773097651346 * Math.log10(al) * Math.log10(Ks) * Math.log10(q)   + 
+0.022671446739094357 * Math.log10(al) * Math.log10(Ks) * Math.log10(dep)   + 
+0.03335805429295968 * Math.log10(al) * Math.log10(dep) * Math.log10(dep)   + 
+0.020147726195870116 * Math.log10(al) * lamb   + 
+1.6279897446766827 * (1/n) * (1/n)    
+- 1.4530569552105415 * (1/n) * (1/n) * (1/n)   + 
+0.7043355004062589 * (1/n) * (1/n) * Math.log10(Ks)    
+- 0.541784083894665 * (1/n) * (1/n) * Math.log10(q)   + 
+0.5902799985238507 * (1/n) * (1/n) * Math.log10(dep)   + 
+0.09038263602784666 * (1/n) * (1/n) * lamb   
+- 0.24899715554877372 * (1/n) * Math.log10(Ks)    
+- 0.10399563657752278 * (1/n) * Math.log10(Ks) * Math.log10(Ks)   + 
+0.21908354200635233 * (1/n) * Math.log10(Ks) * Math.log10(q)    
+- 0.1434519462819891 * (1/n) * Math.log10(Ks) * Math.log10(dep)    
+- 0.030160399742816372 * (1/n) * Math.log10(Ks) * lamb   
+- 0.042722279074579816 * (1/n) * Math.log10(q) * Math.log10(q)   + 
+0.12831152068623008 * (1/n) * Math.log10(q) * Math.log10(dep)   + 
+0.027436721757170452 * (1/n) * Math.log10(q) * lamb    
+- 0.1565433350511172 * (1/n) * Math.log10(dep) * Math.log10(dep)    
+- 0.03806968196564138 * (1/n) * Math.log10(dep) * lamb    
+- 0.19466015404836676 * (1/n) * lamb   + 
+0.008474142129239706 * (1/n) * lamb * lamb    
+- 0.2914427928534872 * Math.log10(Ks)   + 
+0.05235636114710501 * Math.log10(Ks) * Math.log10(Ks)    
+- 0.018086620387045928 * Math.log10(Ks) * Math.log10(Ks) * Math.log10(q)   + 
+0.026784035410313163 * Math.log10(Ks) * Math.log10(Ks) * Math.log10(dep)   
+- 0.07537441951881563 * Math.log10(Ks) * Math.log10(q)   + 
+0.028860757171912103 * Math.log10(Ks) * Math.log10(q) * Math.log10(q)   
+- 0.06277529823160982 * Math.log10(Ks) * Math.log10(q) * Math.log10(dep)   + 
+0.003890244066777326 * Math.log10(Ks) * Math.log10(q) * lamb   + 
+0.02100705109908848 * Math.log10(Ks) * Math.log10(dep) * Math.log10(dep)   + 
+0.030434602257902094 * Math.log10(Ks) * lamb   + 
+0.35107292818654534 * Math.log10(q)   
+- 0.03178639761011755 * Math.log10(q) * lamb   
+- 0.6251196942516541 * Math.log10(dep)   + 
+0.1907936111626416 * Math.log10(dep) * Math.log10(dep)   + 
+0.03710196881236187 * Math.log10(dep) * lamb   + 
+0.09655013764417436 * lamb   
+- 0.0074343753768419465 * lamb * lamb ;
+
+document.getElementById("poly").innerHTML = "FC: " + poly_d.toFixed(5) + " <br> (Effective Saturation)";
+}
+
+</script>
+
+<p style="font-size:100%;" > Based on the amazing scientific article: <a style="color:powderblue; font-size:100%;" href="https://doi.org/10.1016/j.geoderma.2021.115308"> https://doi.org/10.1016/j.geoderma.2021.115308 </a> </p>
+
+</body>
+</html>
+
+
+
