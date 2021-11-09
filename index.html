@@ -36,10 +36,6 @@ a.visited{ style=color: powderblue; font-size: 24px;
                  2px 2px 2px #1040FF;
 }
 
-const formatter = new Intl.NumberFormat('en-US', {
-   minimumFractionDigits: 4,      
-   maximumFractionDigits: 4,
-});
 
 </style>
 <body>
@@ -53,7 +49,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 <p> <i> dep </i> : <input style="font-size: 3.0vh;" type="number" step="any" id="dep" value="30.0"  > [cm] </p>
 <p> <i> q </i> : <input style="font-size: 3.0vh;" type="number" step="any" id="q" value="3.6"  > [mm . d<sup>-1</sup>] </p>
 
-<button style="font-size:3.5vh;" onclick="myFunction()">FC</button>
+<button style="font-size: 3.5vh;" onclick="myFunction()">FC</button>
 
 <p class="p2"  id="poly"> </p>
 
