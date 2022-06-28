@@ -129,6 +129,17 @@ poly_d = 0.8654654556811963 * 1
 0.09655013764417436 * lamb   
 - 0.0074343753768419465 * lamb * lamb ;
 
+  if (poly_d >= 0.999){
+    poly_d = 0.999;
+  }
+  if (poly_d <= 0.001){
+    poly_d = 0.001;
+  }
+  
+  
+  
+ 
+ 
 document.getElementById("poly").innerHTML = "FC: " + poly_d.toFixed(5) + " <br> (Effective Saturation)";
 }
 
