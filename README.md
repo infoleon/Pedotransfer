@@ -8,7 +8,7 @@ https://infoleon.github.io/Pedotransfer/
 The Python script require Sympy to run. To install if from dependencies.toml file, please use the command below
 
   ````python
-pip install .
+pip install sympy
   ````
 
 
