@@ -19,6 +19,6 @@ To install SymPy in your preferred environment:
 
 ```bash
 pip install sympy
-
+```
 
 The script in this folder is a Python code to generate and solve the polynomial pedotransfer function associated to article https://doi.org/10.1016/j.geoderma.2021.115308
